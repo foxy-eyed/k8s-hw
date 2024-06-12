@@ -1,0 +1,21 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "bin/**"
+    - "db/**/*"
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/environments/*"
+
+Metrics/MethodLength:
+  CountAsOne: ["array", "heredoc"]
+  Max: 15
+
+Style/Documentation:
+  Enabled: false
+

@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: k8s_hw_1_development
+
+test:
+  <<: *default
+  database: k8s_hw_1_test
+
+production:
+  <<: *default
+  database: k8s_hw_1_production
+  username: k8s_hw_1
+  password: <%= ENV["K8S_HW_1_DATABASE_PASSWORD"] %>
