@@ -13,6 +13,8 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -22,13 +24,13 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libpq-dev libvips node-gyp pkg-config python-is-python3
 
 # Install JavaScript dependencies
-ARG NODE_VERSION=8.17.0
-ARG YARN_VERSION=1.22.10
+ARG NODE_VERSION=18.20.3
+ARG YARN_VERSION=4.3.0
 ENV PATH=/usr/local/node/bin:$PATH
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
+RUN corepack enable && corepack prepare yarn@${YARN_VERSION}
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -37,7 +39,7 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
 RUN yarn install --frozen-lockfile
 
 # Copy application code
