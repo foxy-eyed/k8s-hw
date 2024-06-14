@@ -23,7 +23,7 @@ echo "Registry ID: ${REGISTRY_ID}"
 echo "---------------------------------"
 
 echo "Building Docker image ${IMAGE_NAME}:${IMAGE_VERSION}..."
-docker build . -t "cr.yandex/${REGISTRY_ID}/${IMAGE_NAME}:${IMAGE_VERSION}" --build-arg RAILS_MASTER_KEY=$(cat config/master.key)
+docker build . -t "cr.yandex/${REGISTRY_ID}/${IMAGE_NAME}:${IMAGE_VERSION}"
 
 echo "---------------------------------"
 echo "Docker image built and tagged as cr.yandex/${REGISTRY_ID}/${IMAGE_NAME}:${IMAGE_VERSION}"

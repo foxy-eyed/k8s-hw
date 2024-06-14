@@ -13,9 +13,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -71,7 +68,3 @@ USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD ["./bin/rails", "server"]
