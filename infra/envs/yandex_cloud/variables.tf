@@ -1,5 +1,5 @@
-variable "yc_folder_id" {
-  description = "Идентификатор папки в Yandex Cloud"
+variable "yc_folder_name" {
+  description = "Название папки в Yandex Cloud"
   type        = string
 }
 
@@ -8,4 +8,3 @@ variable "zone" {
   type        = string
   default     = "ru-central1-a"
 }
-
