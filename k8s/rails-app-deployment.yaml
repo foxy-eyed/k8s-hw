@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-app
+  template:
+    metadata:
+      name: rails-app
+      labels:
+        app: rails-app
+    spec:
+      containers:
+        - name: app-container
+          image: ${IMAGE}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: RAILS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rails-app-secret
+                  key: rails_master_key
+            - name: RAILS_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: rails-app-config
+                  key: rails_env
+          ports:
+            - containerPort: 3000
+          command: [ "./bin/rails" ]
+          args: [ "server" ]
+      restartPolicy: Always
