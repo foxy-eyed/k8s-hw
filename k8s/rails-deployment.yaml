@@ -21,4 +21,6 @@ spec:
         - name: app-container
           image: ${IMAGE_NAME}
           ports:
-            - containerPort: 9292
+            - containerPort: 3000
+          command: [ "./bin/rails" ]
+          args: [ "server" ]
