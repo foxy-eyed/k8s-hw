@@ -197,10 +197,10 @@ jobs:
         run: |
           CR_NAME=${{ env.HELM_RELEASE_NAME }}
           REGISTRY_ID=$(yc container registry get --name "${CR_NAME}" --format json | jq -r .id)
-          PACKAGE_NAME=$(cat package_name.txt)
           helm pull oci://cr.yandex/$REGISTRY_ID/rails-app --version ${{ env.VERSION_WITHOUT_V }}
 
       - name: Install from package
         run: |
+          PACKAGE_NAME=$(cat package_name.txt)
           yc managed-kubernetes cluster get-credentials ${{ env.K8S_CLUSTER_NAME }} --external --force
           helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./$PACKAGE_NAME -f ./rails-app-secrets.yaml --set image.tag=${{ env.VERSION_WITHOUT_V }} --wait
