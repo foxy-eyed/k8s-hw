@@ -198,7 +198,7 @@ jobs:
           CR_NAME=${{ env.HELM_RELEASE_NAME }}
           REGISTRY_ID=$(yc container registry get --name "${CR_NAME}" --format json | jq -r .id)
           PACKAGE_NAME=$(cat package_name.txt)
-          helm pull oci://cr.yandex/$REGISTRY_ID/$PACKAGE_NAME
+          helm pull oci://cr.yandex/$REGISTRY_ID/rails-app --version ${{ env.VERSION_WITHOUT_V }}
 
       - name: Install from package
         run: |
