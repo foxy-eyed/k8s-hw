@@ -1,0 +1,54 @@
+name: Lint and test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  rubocop:
+    name: Rubocop
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: bundle install
+
+      - name: Run Robocop
+        working-directory: ./app
+        run: bundle exec rubocop --parallel
+
+  test:
+    name: Rspec
+
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            bundler-cache: true
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: bundle install
+
+      - name: Run RSpec
+        working-directory: ./app
+        run: bundle exec rspec
+
