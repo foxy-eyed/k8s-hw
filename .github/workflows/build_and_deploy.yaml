@@ -202,4 +202,5 @@ jobs:
 
       - name: Install from package
         run: |
+          yc managed-kubernetes cluster get-credentials ${{ env.K8S_CLUSTER_NAME }} --external --force
           helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./$PACKAGE_NAME -f ./rails-app-secrets.yaml --set image.tag=${{ env.VERSION_WITHOUT_V }} --wait
