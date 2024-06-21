@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - "bin/**"
     - "db/**/*"
+    - "vendor/bundle/**/*"
 
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
