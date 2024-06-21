@@ -195,6 +195,8 @@ jobs:
 
       - name: Pull Helm Chart from Yandex Cloud Container Registry
         run: |
+          CR_NAME=${{ env.HELM_RELEASE_NAME }}
+          REGISTRY_ID=$(yc container registry get --name "${CR_NAME}" --format json | jq -r .id)
           PACKAGE_NAME=$(cat package_name.txt)
           helm pull oci://cr.yandex/$REGISTRY_ID/$PACKAGE_NAME
 
